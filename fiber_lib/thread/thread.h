@@ -2,6 +2,7 @@
 #define _THREAD_H_
 
 #include <mutex>
+#include <string>
 #include <condition_variable>
 #include <functional>
 
@@ -44,6 +45,7 @@ private:
     Semaphore m_semaphore;
 
     std::function<void()> m_cb;
+
     std::string m_name;
 
 private:
@@ -62,8 +64,21 @@ public:
         return m_name;
     }
 
+    void join();
+
+public:
+    // 获取系统分配的线程id
+    static pid_t GetThreadID();
+
+    // 获取当前所在的线程
+    static Thread* GetThis();
+
+    // 获取当前线程的名字
+    static const std::string& GetName();
+
+    // 设置当前线程的名字
+    static void SetName(const std::string& name);
 };
 }
-
 
 #endif
