@@ -10,15 +10,15 @@
 #include <unistd.h>
 #include <mutex>
 
-namespace syalr {
+namespace sylar {
 class Fiber: public std::enable_shared_from_this<Fiber> {
 public:
     std::mutex m_mutex;
 public:
     // 协程的状态
-    enum State {READY, RUNNING, TREM};
+    enum State {READY, RUNNING, TERM};
 
-    Fiber(std::function<void>() cb, size_t stacksize = 0; bool run_in_scheduler = true);
+    Fiber(std::function<void()> cb, size_t stacksize = 0, bool run_in_scheduler = true);
     ~Fiber();
 
     // 重用一个协程
@@ -76,6 +76,5 @@ private:
     bool m_runInScheduler;
 };
 }
-
 
 #endif
