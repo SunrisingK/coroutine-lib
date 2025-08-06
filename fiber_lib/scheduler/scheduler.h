@@ -1,8 +1,8 @@
 #ifndef _SCHEDULER_H_
 #define _SCHEDULER_H_
 
-#include "fiber/fiber.h"
-#include "thread/thread.h"
+#include "fiber.h"
+#include "thread.h"
 #include <mutex>
 #include <vector>
 
@@ -111,7 +111,7 @@ private:
     // 线程池
     std::vector<std::shared_ptr<Thread>> m_threads;
     // 任务队列
-    std::vector<SchedulerTask> m_tasks;
+    std::vector<ScheduleTask> m_tasks;
     // 存储工作线程的线程id
     std::vector<int> m_threadIDs;
     // 需要额外创建的线程数
