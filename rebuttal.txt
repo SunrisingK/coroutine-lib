@@ -1,0 +1,42 @@
+Response to factual errors of reviewers' comments
+We thank all four reviewers (R1,R2,R3,R4) for their precious time, constructive comments and acknowledging 'The experiments are well-designed to validate the method. The paper is logically structured, with clear motivations and results.' (R1), 'The paper effectively addresses the critical and often overlooked challenge of weak spatial misalignment in multi-modal object detection.' (R2), ‘Experiments on the DroneVehicle and DroneVehicle-wm datasets demonstrate improved mAP compared to baselines, particularly in weak misalignment scenarios.’(R3) and 'Experimental results are thorough: the method is evaluated not only on standard benchmarks but also specifically on a curated weakly-misaligned sub-dataset, clearly validating the claimed robustness.' (R4). We respond to the comments in detail below and revise our paper accordingly.
+To Reviewer #1 (R1)
+R1Q1: The meanings of some variables in Equation 3 are not explained.
+
+R1Q2: The abbreviation of CMFS is explained too many times in the paper, as “Competitive Modal Feature Selection (CMFS)”.
+Thank you for your careful review. We will standardize the use of abbreviations in the final submission.
+
+R1Q3: What’s the “Squeeze” process in Fig.2? It’s not the same as “Channel attention” described in the paper
+
+R1Q4: In the CMFS module, while the authors describe flattening the fused feature map and ranking feature vectors by relevance scores, they neither explain how these relevance scores are computed nor specify the concrete value of K used in the TopK selection process.
+
+R1Q5: The paper does not analyze the impact of the number of sampling points K in the DeformCFA module on model performance. It is recommended to supplement relevant ablation experiments to investigate this critical parameter's influence.
+
+R1Q6: “Aggregate” process in Fig.2 is not detailed. In Fig.3, what’s the corresponding parts of “Offsets Module” and “Attention Module” described in Fig.2?
+
+To Reviewer #2 (R2)
+R2Q1: The effectiveness of the proposed approach under scenarios with significant misalignment or larger spatial disparities between modalities remains unclear. The experiments primarily address relatively mild misalignment conditions (0-15 pixels), raising concerns about the model's generalizability to more challenging practical scenarios.
+Thank you for your valuable comment. The DroneVehicle dataset has undergone pre-registration, and most of the offset phenomena within the dataset are concentrated in the 0-15 pixel range. After submitting the manuscript, we found an unregistered visible-thermal dataset DVTOD[1] to further support our research and achieve real-world applications
+
+R2Q2: The Competitive Modal Feature Selection (CMFS) module relies on a simple channel attention mechanism combined with Top-K feature selection. The robustness and sensitivity of this selection method against noisy or poor-quality input data is not extensively analyzed or discussed, potentially limiting the practical reliability of the method.
+We agree with your valuable suggestions. When conducting ablation experiments, we only conducted them on the DroneVehicle dataset without considering low-quality and noisy inputs. In future work, we will consider degraded images (foggy, rainy, etc.) as inputs to validate the robustness of the proposed method.
+
+R2Q3: The model is trained using labels from infrared images only. While justified in terms of annotation comprehensiveness, it could potentially bias the model toward infrared modality characteristics. This might limit detection performance under conditions where visible images have distinctively richer and clearer object representations.
+Thank you for your valuable suggestion. We overlooked the importance of visible light labels during the experiment. In fact, under sufficient lighting conditions, visible light labels have more learning value. In future research, we will adjust the labels of DroneVehicle based on lighting conditions. In addition, we will use the visible-thermal DVTOD[1] dataset. This dataset does not use a single modal label, but selects different modes for different scenarios.
+
+To Reviewer #3 (R3)
+R3Q3: The application to UAV VIS-IR detection, while specific, addresses a problem (weak misalignment) that is not unique to this domain and has been studied in other multi-modal tasks (e.g., RGB-D detection). The absence of exploration into broader applicability further diminishes the novelty.
+We appreciate your valuable comment. After submitting the manuscript, we further searched the multimodal object detection dataset captured by drones and ultimately found the DVTOD[1] dataset. This dataset consists of completely misaligned visible-thermal images, which can further validate our proposed method. In the final submission, we will include experiments on this dataset.
+
+R3Q5: The introduction and related work sections are verbose, with redundant descriptions of VIS-IR complementarity. Streamlining these sections to focus on motivation and gaps is essential.
+We appreciate your valuable comment. We have provided a detailed description of the complementary characteristics of VIS-IR to help readers who are new to this field understand its research significance. In the final submission, we will further streamline the introduction of complementary features.
+
+R3Q6: The experiments are confined to the DroneVehicle dataset and its weak-misalignment subset (DroneVehicle-wm), lacking validation on other multi-modal datasets (e.g., FLIR ADAS) to demonstrate generalizability. The ablation study (Table 4) validates CMFS and DeformCFA but omits analysis of computational overhead (e.g., FLOPS, inference time), which is critical for assessing efficiency.Baseline comparisons in Tables 1 and 2 are incomplete (e.g., missing data for C2Former, DATFF) and exclude recent state-of-the-art methods (e.g., Vision Transformer-based models), weakening the performance claims.
+Thank you for your constructive comments. 
+
+To Reviewer #4 (R4)
+R4Q5: The method’s generalizability to other types of UAV multi-modal imagery (beyond vehicle detection or DroneVehicle) is not explored.
+Thank you for your constructive comments and we strongly agree with you. Please refer to R3Q3. We will provide detail experiments in the final submission.
+
+[1]. K. Song, X. Xue, H. Wen, Y. Ji, Y. Yan and Q. Meng, "Misaligned Visible-Thermal Object Detection: A Drone-Based Benchmark and Baseline," in IEEE Transactions on Intelligent Vehicles, vol. 9, no. 11, pp. 7449-7460, Nov. 2024, doi: 10.1109/TIV.2024.3398429.
+
