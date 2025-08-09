@@ -54,7 +54,37 @@ public:
     std::shared_ptr<Timer> addTimer(uint64_t ms, std::function<void()> cb, bool recurring = false);
 
     // 添加条件timer
-    // std::shared_ptr<Timer>
+    std::shared_ptr<Timer> addConditionTimer(uint64_t ms, std::function<void()> cb, std::weak_ptr<void> weak_cond, bool recurring = false);
+
+    // 拿到堆中最近的超时时间
+    uint64_t getNextTimer();
+
+    // 取出所有超时定时器的回调函数
+    void listExpiredCb(std::vector<std::function<void()>>& cbs);
+
+    // 堆中是否有Timer
+    bool hasTimer();
+
+protected:
+    // 当一个最早的timer加入到堆中, 就调用该函数
+    virtual void onTimerInsertedAtFront() {
+        
+    }
+
+    // 添加timer
+    void addTimer(std::shared_ptr<Timer> timer);
+
+private:
+    // 当系统时间改变时, 调用该函数
+    bool detectClockRollover();
+
+private:
+    std::shared_mutex m_mutex;
+    // 时间堆
+    std::set<std::shared_ptr<Timer>, Timer::Comparator> m_timers;
+    bool m_tickled = false;
+    // 上次检查系统时间是否回退的绝对时间
+    std::chrono::time_point<std::chrono::system_clock> m_previousTime; 
 };
 }
 
